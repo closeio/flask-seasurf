@@ -185,6 +185,9 @@ class SeaSurf(object):
         if self._csrf_disable:
             return  # don't validate for testing
 
+        if not request.cookies:
+            return 
+
         csrf_token = request.cookies.get(self._csrf_name, None)
         if not csrf_token:
             session[self._csrf_name] = self._generate_token()
