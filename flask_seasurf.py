@@ -185,8 +185,11 @@ class SeaSurf(object):
         if self._csrf_disable:
             return  # don't validate for testing
 
+        if 'AUTHORIZATION' in request.headers:
+            return  # don't validate if API key auth is used
+
         if not request.cookies:
-            return 
+            return
 
         csrf_token = request.cookies.get(self._csrf_name, None)
         if not csrf_token:
